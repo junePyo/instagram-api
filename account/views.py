@@ -15,9 +15,9 @@ from feed.models import *
 class ProfileView(View):
     # get method: returns user profile
     def get(request):
-        commentsList = []
-        account = Account.objects.get(pk=account_pk)
-        commentsList.append(list(account.comment_set.values('text')))
+        jwt.decode()
+        profile = {
+            'username':}
         # commentsList = serializers.serialize(
         #    "json", account.comment_set.values('text'))
         # return all comments written by the user
@@ -45,6 +45,7 @@ class LoginView(View):
                 )
                 if bcrypt.checkpw(data['password'].encode('utf-8'), getattr(user, 'password').encode('utf-8')):
                     # if password is correct
+                    jwt.encode({'user_id:1'},)
                     return JsonResponse({'message': 'Login Successful!'}, status=200)
             return JsonResponse({'message': 'Incorrect id or password'}, status=400)
         except KeyError:
