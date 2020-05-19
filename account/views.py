@@ -10,11 +10,13 @@ from django.db.models import Q
 
 from account.models import Account, Follow
 from feed.models import *
+from settings import SECRET_KEY, HASH
 
 
+@login_decorator
 class ProfileView(View):
     # get method: returns user profile
-    def get(request):
+    def get(self, request):
         jwt.decode()
         profile = {
             'username':}
@@ -45,8 +47,9 @@ class LoginView(View):
                 )
                 if bcrypt.checkpw(data['password'].encode('utf-8'), getattr(user, 'password').encode('utf-8')):
                     # if password is correct
-                    jwt.encode({'user_id:1'},)
-                    return JsonResponse({'message': 'Login Successful!'}, status=200)
+                    token = jwt.encode({'user_id': user.id},
+                                       SECRET_KEY, algorithm=HASH)
+                    return JsonResponse({'message': 'Login Successful!', 'token': token}, status=200)
             return JsonResponse({'message': 'Incorrect id or password'}, status=400)
         except KeyError:
             return JsonResponse({'message': 'INVALID_KEY'}, status=400)
