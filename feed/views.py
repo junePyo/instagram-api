@@ -23,4 +23,12 @@ class CommentView(View):
     def get(self, request):
         # post method: leaves a single comment on a post
 
+    @login_decorator
     def post(self, request):
+        user = request.user
+        data = json.loads(request.body)
+        try:
+            Comment.objects.create(
+                account=user
+                text=data['text']
+            )
