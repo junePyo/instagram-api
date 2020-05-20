@@ -11,15 +11,20 @@ from django.db.models import Q
 from account.models import Account, Follow
 from feed.models import *
 from settings import SECRET_KEY, HASH
+from instagram.utils import login_decorator
 
 
 @login_decorator
 class ProfileView(View):
     # get method: returns user profile
     def get(self, request):
-        jwt.decode()
-        profile = {
-            'username':}
+        user = request.user
+        profile_info = {
+            'username': user.username
+            'email': user.email
+            'followers': user.
+            'following': user.
+            'posts':}
         # commentsList = serializers.serialize(
         #    "json", account.comment_set.values('text'))
         # return all comments written by the user

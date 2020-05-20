@@ -1,10 +1,13 @@
 from django.shortcuts import render
+from instagram.utils import login_decorator
 
 
 class FeedView(View):  # returns all instagram feeds on main page
+    @login_decorator
     def get(self, request):
-
-    return JsonResponse({'message': 'Welcome'}, status=200)
+        user = request.user
+        feeds = user.feed_set.values()
+        return JsonResponse(feeds, status=200)
 
 
 class PostView(View):
